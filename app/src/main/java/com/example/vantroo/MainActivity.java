@@ -19,6 +19,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Activity activity;
     ProgressBar progressBar;
     private Button btnReload;
+    private LinearLayout lnrHome,lnrProduct,lnrCart,lnrProfile;
 
     private ProgressDialog progDailog;
 
@@ -40,13 +42,25 @@ public class MainActivity extends AppCompatActivity {
 
         activity = MainActivity.this;
 
-        progressBar = findViewById(R.id.progressBar);
+//        progressBar = findViewById(R.id.progressBar);
         webview = (WebView) findViewById(R.id.webview);
 
         btnReload = findViewById(R.id.btn_reload);
         btnReload.setOnClickListener(_onclickListener);
 
-        reload();
+        lnrHome = findViewById(R.id.lnr_home);
+        lnrHome.setOnClickListener(_onclickListener);
+
+        lnrProduct = findViewById(R.id.lnr_product);
+        lnrProduct.setOnClickListener(_onclickListener);
+
+        lnrCart = findViewById(R.id.lnr_cart);
+        lnrCart.setOnClickListener(_onclickListener);
+
+        lnrProfile = findViewById(R.id.lnr_profile);
+        lnrProfile.setOnClickListener(_onclickListener);
+
+        reload("https://vantroo.com/");
 
 
     }
@@ -74,7 +88,19 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.btn_reload: {
-                    reload();
+                    reload("https://vantroo.com/");
+                    break;
+                } case R.id.lnr_home: {
+                    reload("https://vantroo.com/");
+                    break;
+                } case R.id.lnr_product: {
+                    reload("https://vantroo.com/store/");
+                    break;
+                }case R.id.lnr_cart: {
+                    reload("https://vantroo.com/cart-2/");
+                    break;
+                }case R.id.lnr_profile: {
+                    reload("https://vantroo.com/my-account-2/");
                     break;
                 }
                 default: {
@@ -84,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private void reload() {
+    private void reload(String url) {
         lnrBlock.setVisibility(View.GONE);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -109,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        webview.loadUrl("https://vantroo.com/");
+        webview.loadUrl(url);
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
